@@ -1,0 +1,4 @@
+# WorldCat Client: Build & Deployment Dependencies
+build
+twine
+wheel

@@ -1,0 +1,4 @@
+# WorldCat Client: Package Dependencies
+requests==2.32.*
+retry_requests==2.0.*
+enumerific>=1.1.0

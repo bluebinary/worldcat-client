@@ -1,0 +1,16 @@
+{
+  "method": "POST",
+  "url": "https://oauth.oclc.org/token?grant_type=client_credentials&scope=wcapi",
+  "params": {},
+  "headers": {
+    "User-Agent": "python-requests/2.32.5",
+    "Accept-Encoding": "gzip, deflate, zstd",
+    "Accept": "application/json",
+    "Connection": "keep-alive",
+    "Content-Type": "application/json",
+    "Content-Length": "0"
+  },
+  "status_code": 200,
+  "type": "application/json;charset=UTF-8",
+  "content": "{\"access_token\":\"<token>\",\"expires_at\":\"2026-01-02 03:04:05Z\",\"authenticating_institution_id\":\"0000\",\"scope\":\"wcapi:change_password wcapi:view_brief_bib wcapi:view_retained_holdings wcapi:view_summary_holdings wcapi:view_holdings wcapi:view_bib wcapi:view_my_holdings wcapi:view_institution_holdings\",\"principalID\":\"\",\"context_institution_id\":\"0000\",\"scopes\":\"wcapi:change_password wcapi:view_brief_bib wcapi:view_retained_holdings wcapi:view_summary_holdings wcapi:view_holdings wcapi:view_bib wcapi:view_my_holdings wcapi:view_institution_holdings\",\"token_type\":\"bearer\",\"expires_in\":1234,\"principalIDNS\":\"\"}"
+}

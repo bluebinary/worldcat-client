@@ -1,0 +1,15 @@
+{
+  "method": "GET",
+  "url": "https://americas.discovery.api.oclc.org/worldcat/search/v2/brief-bibs?q=bn%3A0-9613921-1-8&limit=10&orderBy=bestMatch&offset=91",
+  "params": {},
+  "headers": {
+    "User-Agent": "python-requests/2.32.5",
+    "Accept-Encoding": "gzip, deflate, zstd",
+    "Accept": "application/json",
+    "Connection": "keep-alive",
+    "Authorization": "Bearer <token>"
+  },
+  "status_code": 200,
+  "type": "application/json;charset=UTF-8",
+  "content": "{\"numberOfRecords\":93,\"briefRecords\":[{\"oclcNumber\":\"900273512\",\"title\":\"Envisioning information\",\"creator\":\"Edward R. Tufte\",\"date\":\"2003\",\"machineReadableDate\":\"2003\",\"language\":\"eng\",\"generalFormat\":\"Book\",\"specificFormat\":\"PrintBook\",\"edition\":\"9. printing\",\"publisher\":\"Graphics Press\",\"publicationPlace\":\"Cheshire, Conn.\",\"isbns\":[\"0961392118\",\"9780961392116\"],\"catalogingInfo\":{\"catalogingAgency\":\"DKDLA\",\"catalogingLanguage\":\"dan\",\"levelOfCataloging\":\"7\",\"transcribingAgency\":\"DKDLA\"}},{\"oclcNumber\":\"318372592\",\"title\":\"Envisioning information\",\"creator\":\"Edward Rolf Tufte\",\"date\":\"2005, ©1990\",\"machineReadableDate\":\"1990\",\"language\":\"eng\",\"generalFormat\":\"Book\",\"specificFormat\":\"PrintBook\",\"publisher\":\"Graphics Press\",\"publicationPlace\":\"Cheshire, Conn.\",\"isbns\":[\"0961392118\",\"9780961392116\"],\"catalogingInfo\":{\"catalogingAgency\":\"ZZAND\",\"catalogingLanguage\":\"spa\",\"levelOfCataloging\":\"M\",\"transcribingAgency\":\"ZZAND\"}},{\"oclcNumber\":\"1010739067\",\"title\":\"Envisioning information\",\"date\":\"1998, ©1990\",\"machineReadableDate\":\"1995\",\"language\":\"und\",\"generalFormat\":\"Book\",\"specificFormat\":\"PrintBook\",\"edition\":\"Sixth printing\",\"publisher\":\"Graphics Press\",\"publicationPlace\":\"Cheshire, Conn.\",\"isbns\":[\"0961392118\",\"9780961392116\"],\"catalogingInfo\":{\"catalogingAgency\":\"AU@\",\"catalogingLanguage\":\"eng\",\"levelOfCataloging\":\"7\",\"transcribingAgency\":\"AU@\"}}]}"
+}

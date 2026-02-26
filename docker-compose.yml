@@ -1,0 +1,53 @@
+x-volume-mounts: &volumes
+  - ./source/worldcatclient:/source/worldcatclient
+  - ./source/worldcatclient:/usr/local/lib/python/site-packages/worldcatclient
+  - ./tests:/tests
+
+services:
+  all:
+    container_name: worldcat-client-all
+    build:
+      dockerfile: ./Dockerfile
+      context: ./
+    image: worldcat-client-all
+    env_file: .env
+    environment:
+      - SERVICE=all
+    volumes:
+      *volumes
+
+  black:
+    container_name: worldcat-client-black
+    build:
+      dockerfile: ./Dockerfile
+      context: ./
+    image: worldcat-client-black
+    env_file: .env
+    environment:
+      - SERVICE=black
+    volumes:
+      *volumes
+
+  flakes:
+    container_name: worldcat-client-flakes
+    build:
+      dockerfile: ./Dockerfile
+      context: ./
+    image: worldcat-client-flakes
+    env_file: .env
+    environment:
+      - SERVICE=flakes
+    volumes:
+      *volumes
+
+  tests:
+    container_name: worldcat-client-tests
+    build:
+      dockerfile: ./Dockerfile
+      context: ./
+    image: worldcat-client-tests
+    env_file: .env
+    environment:
+      - SERVICE=tests
+    volumes:
+      *volumes

@@ -1,0 +1,76 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "worldcatclient"
+description = "Simplifies interaction with the WorldCat API."
+readme = {file = "README.md", content-type = "text/markdown"}
+keywords = ["WorldCat", "API", "Client"]
+authors = [{name = "Daniel Sissman"}]
+license = "MIT"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+requires-python = ">=3.10"
+dynamic = [
+  "version",
+  "dependencies",
+  "optional-dependencies",
+]
+
+[project.urls]
+documentation = "https://github.com/bluebinary/worldcat-client/blob/main/README.md"
+changelog = "https://github.com/bluebinary/worldcat-client/blob/main/CHANGELOG.md"
+repository = "https://github.com/bluebinary/worldcat-client"
+issues = "https://github.com/bluebinary/worldcat-client/issues"
+homepage = "https://github.com/bluebinary/worldcat-client"
+
+[tool.setuptools]
+zip-safe = true
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {file = "source/worldcatclient/version.txt"}
+dependencies = {file = "requirements.txt"}
+
+[tool.setuptools.dynamic.optional-dependencies]
+development = {file = "requirements.development.txt"}
+distribution = {file = "requirements.distribution.txt"}
+
+[tool.setuptools.packages.find]
+where = ["source"]
+exclude = ["documentation*", "resources*", "*#*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.tsv", "*.csv", "*.xml", "*.spec"]
+source = ["*.json", "*.tsv", "*.csv", "*.xml", "*.spec"]
+tests = ["*.json", "*.tsv", "*.csv", "*.spec"]
+
+[tool.setuptools.exclude-package-data]
+"*" = ["*#*", "#*", "@*"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests"
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # The following are specific to Black, you probably don't want those.
+  | blib2to3
+  | tests/data
+  | profiling
+)/
+'''

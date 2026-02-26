@@ -1,0 +1,10 @@
+# WorldCat Client: Development, Linting & Unit Test Dependencies
+black==26.1.0
+pytest==8.3.0
+pytest-cov==4.1.0
+pytest-codeblocks==0.17.0
+pyflakes==3.4.0
+requests==2.32.*
+requests_futures==1.0.*
+requests-mock==1.*,<2.0
+multipart>=0.2.4
