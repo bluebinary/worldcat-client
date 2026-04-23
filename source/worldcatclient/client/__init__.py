@@ -237,14 +237,19 @@ class WorldCatClient(object):
                                     limit=limit,
                                     offset=(offset + limit),
                                     timeout=timeout,
+                                    order=order,
                                     parsed=parsed,
+                                    **kwargs,
                                 )
 
         except requests.exceptions.RequestException as exception:
             logger.error(f"An error occurred during the search request: {exception}")
-            logger.debug(response.status_code)
-            logger.debug(response.headers)
-            logger.debug(response.content)
+
+            if isinstance(response, requests.Response):
+                logger.debug("Request URL: %s", response.url)
+                logger.debug("Status Code: %s", response.status_code)
+                logger.debug("Headers:     %s", response.headers)
+                logger.debug("Content:     %s", response.content)
 
 
 __all__ = [
