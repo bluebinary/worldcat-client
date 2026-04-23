@@ -1,5 +1,9 @@
 from worldcatclient.client import WorldCatClient
-from worldcatclient.records import WorldCatRecord
+from worldcatclient.records import (
+    WorldCatData,
+    WorldCatRecord,
+    WorldCatInfo,
+)
 from worldcatclient.enumerations import (
     WorldCatScope,
     WorldCatOrderingSearchAPI,
@@ -16,7 +20,9 @@ __all__ = [
     # Client Classes
     "WorldCatClient",
     # Record Classes
+    "WorldCatData",
     "WorldCatRecord",
+    "WorldCatInfo",
     # Enumerations
     "WorldCatScope",
     "WorldCatOrderingSearchAPI",
