@@ -1,5 +1,6 @@
 # WorldCat Client: Package Dependencies
 classicist==1.0.5
+configures>=0.9.2
 enumerific>=1.1.0
 fluently==0.9.1
 requests==2.32.*

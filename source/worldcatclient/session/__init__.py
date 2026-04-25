@@ -23,6 +23,8 @@ from datetime import datetime, timezone, timedelta
 import requests
 import json
 
+from urllib3.util import Retry
+
 logger = logger.getChild(__name__)
 
 
@@ -67,6 +69,16 @@ class WorldCatSession(requests.Session):
         authendpoint: str = None,
         scopes: list[WorldCatScope] | list[str] = None,
         retries: int = 3,
+        retry_statuses: tuple[int] | list[int] | set[int] = (
+            408,
+            429,
+            500,
+            502,
+            503,
+            504,
+            522,
+        ),
+        backoff_factor: float | int = 1.0,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
@@ -127,6 +139,49 @@ class WorldCatSession(requests.Session):
             )
 
         self._retries: int = retries
+
+        if isinstance(retry_statuses, (tuple, list, set)):
+            retry_statuses = list(retry_statuses)
+
+            for retry_status in retry_statuses:
+                if not isinstance(retry_status, int):
+                    raise TypeError(
+                        "Each entry in the 'retry_statuses' argument must have an integer value!"
+                    )
+                elif not 400 <= retry_status <= 599:
+                    raise ValueError(
+                        "Each entry in the 'retry_statuses' argument must have an integer value between 400-599!"
+                    )
+        else:
+            raise TypeError(
+                "The 'retry_statuses' argument must have a tuple, list or set value of integers!"
+            )
+
+        if isinstance(backoff_factor, (float, int)):
+            backoff_factor = float(backoff_factor)
+
+            if not 0.1 <= backoff_factor <= 10.0:
+                raise ValueError(
+                    "The 'backoff_factor' argument must have a value between 0.1 – 10.0!"
+                )
+        else:
+            raise TypeError(
+                "The 'backoff_factor' argument must have a float or integer value!"
+            )
+
+        # Create and configure a HTTP adapter with the configured retry strategy
+        adapter = requests.adapters.HTTPAdapter(
+            max_retries=Retry(
+                total=retries,  # Total number of retries per request
+                status_forcelist=retry_statuses,  # Statuses to retry
+                backoff_factor=backoff_factor,  # Exponential backoff (e.g., 0s, 2s, 4s...)
+                allowed_methods=["HEAD", "GET"],  # Methods to retry requests for
+            ),
+        )
+
+        # Mount the adapters into the current session
+        self.mount("http://", adapter)
+        self.mount("https://", adapter)
 
     def __del__(self):
         logger.debug("%s.__del__()", self.__class__.__name__)

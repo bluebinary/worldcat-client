@@ -1,3 +1,4 @@
+from worldcatclient.configuration import secrets
 from worldcatclient.logging import logger
 from worldcatclient.enumerations import (
     WorldCatScope,
@@ -50,7 +51,10 @@ class WorldCatClient(object):
         self._secret: str = secret
 
         if endpoint is None:
-            endpoint: str = WORLDCAT_API_ENDPOINT
+            endpoint: str = secrets.get(
+                "WORLDCAT_API_ENDPOINT",
+                default=WORLDCAT_API_ENDPOINT,
+            )
         elif not isinstance(endpoint, str):
             raise TypeError("The 'endpoint' argument must have a string value!")
         elif not (endpoint.startswith("http://") or endpoint.startswith("https://")):
