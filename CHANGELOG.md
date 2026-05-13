@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.8.3] - 2026-05-13
+### Added
+- Adjusted dependency versions for better compatibility with other packages.
+
 ## [0.8.2] - 2026-04-24
 ### Added
 - Support for improved HTTP request retry handling.

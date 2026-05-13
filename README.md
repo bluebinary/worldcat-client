@@ -31,23 +31,22 @@ The the following methods are provided by the client:
 
     * `query` (`str`) – (required) use to specify the search query.
     * `limit` (`int`) – (optional) used to specify the maximum number of search results to obtain per API call; defaults to `10`; if specified must have a value between `1` – `50` results.
-    * `parsed` (`bool`) – (optional) use to control whether the `.search()` method returns raw dictionary record payloads or a parsed record payload as `WorldCatRecord` class instances; defaults to `False`, set to `True` to return parsed record payloads.
-    * `order` (`WorldCatOrderingSearchAPI`) - (optional) use to specify the sort order for the search results; defaults to `WorldCatOrderingSearchAPI.BestMatch`, but can be set to any of the available `WorldCatOrderingSearchAPI` enumeration options. See [**Sort Order**](#sort-order) below.
-    * `timeout` (`int`) – (optional) used to specify the maximum timeout for the API call; defaults to `10`; if specified must have a value between `1` – `120` seconds.
-    * `offset` (`int`) – (optional) used internally by the method to support paginating through the results; defaults to `None`; if specified must have a value `1+`; should not be specified manually.
+    * `parsed` (`bool`) – (optional) use to control whether the `.search()` method returns raw dictionary record payloads or parsed record payload as `WorldCatRecord` class instances; defaults to `False`, set to `True` to return parsed record payloads.
+    * `order` (`WorldCatOrderingSearchAPI`) – (optional) use to specify the sort order for the search results; defaults to `WorldCatOrderingSearchAPI.BestMatch`, but can be set to any of the available `WorldCatOrderingSearchAPI` enumeration options. See [**Sort Order**](#sort-order) section below.
+    * `timeout` (`int`) – (optional) used to specify the maximum timeout for the API call; defaults to `10` seconds; if specified must have a value between `1` – `120` seconds.
+    * `offset` (`int`) – (optional) used internally by the method to support paginating through the results; defaults to `None`; if specified must have a value of `1` or greater; must not be specified manually.
 
 <a name="client-initialisation-setup"></a>
 ### Client Initialisation & Setup
 
-The example illustrates initialising the `WorldCatClient`, providing the required parameters,
-then demonstrates use of the various methods of the client to perform the supported operations:
+The example illustrates initialising the `WorldCatClient` by providing the required parameters, then demonstrates use of the various methods of the client to perform the supported operations:
 
 <!--pytest.mark.skip-->
 
 ```python
 from worldcatclient import WorldCatClient
 
-# Initialise the client, supplying the token, and any desired optional parameters:
+# Initialise client with the client ID, token, and any desired optional parameters:
 client = WorldCatClient(
     client_id = "<token>",
     secret = "<secret>",
@@ -63,14 +62,10 @@ for record in client.search(query="ti:WorldCat API"):
 <a name="search-result-model"></a>
 ### Records
 
-The WorldCat Client can return both raw search result records payloads as well as an
-instance of its `WorldCatRecord` class which simplifies the process of interfacing with
-the search result records by parsing the record payload into an Python class with
-properties to access each value.
+The WorldCat Client can return search results in two forms: as dictionary instances, which hold the raw search result record payloads, or as instances of the library's `WorldCatRecord` class which simplifies the process of interacting with the search results by parsing the raw payloads into class instances that provide properties to access each value.
 
 To perform a search and to have the `WorldCatClient` return `WorldCatRecord` class
-instances instead of the raw search result record payloads, simply pass the optional
-`parsed` argument to the `.search()` method with a value of `True`:
+instances instead of dictionaries holding the raw search result record payloads, simply pass the optional `parsed` argument to the `.search()` method with a value of `True`:
 
 <!--pytest.mark.skip-->
 
@@ -87,7 +82,32 @@ for record in client.search(query="ti:WorldCat API", parsed=True):
     assert isinstance(record, WorldCatRecord)
 
     print(record)
+    print(record.title)
+    print(record.creator)
+    print(record.oclc_number)
 ```
+
+The `WorldCatRecord` class instances offer the following properties to access the parsed
+search result record data:
+
+ * `oclc_number` – provides access to the publication's OCLC record number;
+ * `title` – provides access to the publication's title;
+ * `creator` – provides access to the publication's creator;
+ * `machine_readable_date` – provides access to the publication's date in machine-readable form;
+ * `language` –  provides access to the publication's language;
+ * `general_format` – provides access to the publication's general format, such as 'Book';
+ * `specific_format` – provides access to the publication's specific format, such as 'eBook';
+ * `publisher` – provides access to the publication's publisher;
+ * `publication_place` – provides access to the publication's place of publication;
+ * `isbns` – provides access to the publication's list of associated ISBNs, if any;
+ * `cataloging_info` – provides access to the publication's cataloging information, if specified, which is returned as an instance of the `WorldCatInfo` class (see below) or `None` otherwise.
+ 
+The `WorldCatInfo` class instances, accessible via the `WorldCatRecord` class' `cataloging_info` property, provides access to the following cataloging fields:
+
+ * `cataloging_agency` – provides access to the name of the agency that cataloged the publication within the parent search result;
+ * `cataloging_language` – provides access to the name of the language of the cataloging for the publication within the parent search result;
+ * `level_of_cataloging` – provides access to the level of cataloging for the publication, if any, within the parent search result;
+ * `transcribing_agency` – provides access to the name of the agency that transcribed the publication's cataloging information, if any, within the parent search result.
 
 <a name="sort-order"></a>
 ### Search Results Sort Order
